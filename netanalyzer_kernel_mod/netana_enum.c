@@ -307,7 +307,7 @@ static int nanl_of_remove(struct platform_device *pdev)
         if (ptdeviceinfo != NULL)
                 netana_unregisterdevice(ptdeviceinfo);
 
-        iounmap(ptdeviceinfo->dpminfo->internal_addr);
+        devm_iounmap(&pdev->dev, ptdeviceinfo->dpminfo->internal_addr);
         kfree( ptdeviceinfo->dpminfo);
         ptdeviceinfo->dpminfo = NULL;
         kfree( ptdeviceinfo);
