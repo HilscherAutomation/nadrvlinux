@@ -246,7 +246,7 @@ static int nanl_of_probe(struct platform_device *pdev)
                 ret = -EINVAL;
                 goto err;
         } else {
-                char *buf;
+                const char *buf;
                 int buflen;
                 buf = of_get_property(pdev->dev.of_node, "startuptype", &buflen);
                 if (buf && !strncmp(buf, "flash", buflen)) {

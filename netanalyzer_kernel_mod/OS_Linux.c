@@ -234,10 +234,10 @@ void OS_WritePCIConfig(void* pvOSDependent, void* pvPCIConfig)
         struct netana_info *ptDeviceInfo = (struct netana_info*)pvOSDependent;
 
         if(!pvOSDependent)
-                return NULL;
+                return;
 
         if(!ptDeviceInfo->pcidevice)
-                return NULL;
+                return;
 
         pci_ret = WritePCIConfig(ptDeviceInfo->pcidevice, 256, pvPCIConfig);
 
