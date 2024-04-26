@@ -209,6 +209,9 @@ void* OS_ReadPCIConfig(void* pvOSDependent)
         if(!pvOSDependent)
                 return NULL;
 
+        if(!ptDeviceInfo->pcidevice)
+                return NULL;
+
         pci_buf = kzalloc(256, GFP_KERNEL);
         if(!pci_buf) {
                 //perror("pci_buf malloc failed");
@@ -229,6 +232,12 @@ void OS_WritePCIConfig(void* pvOSDependent, void* pvPCIConfig)
 {
         int                pci_ret;
         struct netana_info *ptDeviceInfo = (struct netana_info*)pvOSDependent;
+
+        if(!pvOSDependent)
+                return NULL;
+
+        if(!ptDeviceInfo->pcidevice)
+                return NULL;
 
         pci_ret = WritePCIConfig(ptDeviceInfo->pcidevice, 256, pvPCIConfig);
 
@@ -622,7 +631,7 @@ void  OS_EnableDeviceInterrupts(void* pvOSDependent)
         struct netana_info *ptDeviceInfo = (struct netana_info*)pvOSDependent;
 
         /* register irq handler */
-        if (request_irq(ptDeviceInfo->pcidevice->irq, netana_isr, IRQF_SHARED, ptDeviceInfo->devname, (void*)ptDeviceInfo))
+        if (request_irq(ptDeviceInfo->irq, netana_isr, IRQF_SHARED, ptDeviceInfo->devname, (void*)ptDeviceInfo))
                 printk(KERN_ERR "error requesting IRQ\n");
         else /* enable interrupts */
                 netana_tkit_enable_hwinterrupts(&ptDeviceInfo->tkdevice->deviceinstance);
@@ -634,7 +643,7 @@ void  OS_DisableDeviceInterrupts(void* pvOSDependent)
 
         netana_tkit_disable_hwinterrupts(&ptDeviceInfo->tkdevice->deviceinstance);
         /* free irq */
-        free_irq(ptDeviceInfo->pcidevice->irq, (void*)ptDeviceInfo);
+        free_irq(ptDeviceInfo->irq, (void*)ptDeviceInfo);
 }
 
 int OS_Snprintf(char* szBuffer, uint32_t ulSize, const char* szFormat, ...)

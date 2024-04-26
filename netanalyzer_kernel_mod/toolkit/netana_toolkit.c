@@ -1270,53 +1270,67 @@ int32_t netana_tkit_deviceadd(struct NETANA_DEVINSTANCE_T* ptDevInstance, uint32
     /* Disable Interrupts on Device physically if they are still enabled */
     ptDevInstance->ptGlobalRegisters->ulIRQEnable_0 = 0;
 
-    /* Reset device */
-    if(NETANA_NO_ERROR != (lRet = netx_reset(ptDevInstance)))
-    {
-      if(g_ulTraceLevel & NETANA_TRACELEVEL_ERROR)
+    if(!ptDevInstance->ulFlashBased) {
+      /* Reset device */
+      if(NETANA_NO_ERROR != (lRet = netx_reset(ptDevInstance)))
       {
-        USER_Trace(ptDevInstance, NETANA_TRACELEVEL_ERROR,
-                   "Error resetting netX chip (lRet=0x%08X)!",
-                   lRet);
-      }
+        if(g_ulTraceLevel & NETANA_TRACELEVEL_ERROR)
+        {
+          USER_Trace(ptDevInstance, NETANA_TRACELEVEL_ERROR,
+                     "Error resetting netX chip (lRet=0x%08X)!",
+                     lRet);
+        }
 
-      /* Download 2nd Stage Bootloader */
-    } else if(NETANA_NO_ERROR != (lRet = netx_download_bootloader(ptDevInstance)))
-    {
-      if(g_ulTraceLevel & NETANA_TRACELEVEL_ERROR)
+        /* Download 2nd Stage Bootloader */
+      } else if(NETANA_NO_ERROR != (lRet = netx_download_bootloader(ptDevInstance)))
       {
-        USER_Trace(ptDevInstance, NETANA_TRACELEVEL_ERROR,
-                   "Error downloading bootloader to device (lRet=0x%08X)!",
-                   lRet);
-      }
-      /* retrieve device class (required to be able to select the correct firmware) */
-    } else if (0 == (ptDevInstance->usDeviceClass = RequestDeviceClass(ptDevInstance)))
-    {
-      lRet = NETANA_FUNCTION_FAILED;
-      if(g_ulTraceLevel & NETANA_TRACELEVEL_ERROR)
+        if(g_ulTraceLevel & NETANA_TRACELEVEL_ERROR)
+        {
+          USER_Trace(ptDevInstance, NETANA_TRACELEVEL_ERROR,
+                     "Error downloading bootloader to device (lRet=0x%08X)!",
+                     lRet);
+        }
+        /* retrieve device class (required to be able to select the correct firmware) */
+      } else if (0 == (ptDevInstance->usDeviceClass = RequestDeviceClass(ptDevInstance)))
       {
-        USER_Trace(ptDevInstance, NETANA_TRACELEVEL_ERROR,
-                   "Error while identifying device!");
-      }
-    } else if(NETANA_NO_ERROR != (lRet = netx_update_ident_info(ptDevInstance, &lErrorIdentUpdate)))
-    {
-      if(g_ulTraceLevel & NETANA_TRACELEVEL_ERROR)
+        lRet = NETANA_FUNCTION_FAILED;
+        if(g_ulTraceLevel & NETANA_TRACELEVEL_ERROR)
+        {
+          USER_Trace(ptDevInstance, NETANA_TRACELEVEL_ERROR,
+                     "Error while identifying device!");
+        }
+      } else if(NETANA_NO_ERROR != (lRet = netx_update_ident_info(ptDevInstance, &lErrorIdentUpdate)))
       {
-        USER_Trace(ptDevInstance, NETANA_TRACELEVEL_ERROR,
-                   "Error downloading licensefile to device (lRet=0x%08X)!",
-                   lRet);
-      }
-      /* Download and Start Firmware */
-    } else if(NETANA_NO_ERROR != (lRet = DownloadAndStartFirmware(ptDevInstance)))
-    {
-      if(g_ulTraceLevel & NETANA_TRACELEVEL_ERROR)
+        if(g_ulTraceLevel & NETANA_TRACELEVEL_ERROR)
+        {
+          USER_Trace(ptDevInstance, NETANA_TRACELEVEL_ERROR,
+                     "Error downloading licensefile to device (lRet=0x%08X)!",
+                     lRet);
+        }
+        /* Download and Start Firmware */
+      } else if(NETANA_NO_ERROR != (lRet = DownloadAndStartFirmware(ptDevInstance)))
       {
-        USER_Trace(ptDevInstance, NETANA_TRACELEVEL_ERROR,
-                   "Error starting firmware on device (lRet=0x%08X)!",
-                   lRet);
+        if(g_ulTraceLevel & NETANA_TRACELEVEL_ERROR)
+        {
+          USER_Trace(ptDevInstance, NETANA_TRACELEVEL_ERROR,
+                     "Error starting firmware on device (lRet=0x%08X)!",
+                     lRet);
+        }
       }
+    } else {
+      NETANA_BASE_DPM_T* ptDpm = (NETANA_BASE_DPM_T*)ptDevInstance->pvDPM;
+      if(OS_Memcmp(NETANA_COOKIE, (void*)ptDpm->tSystemInfoBlock.abCookie, sizeof(ptDpm->tSystemInfoBlock.abCookie)) == 0) {
+          lRet = NETANA_NO_ERROR;
+          USER_Trace(ptDevInstance, NETANA_TRACELEVEL_INFO, "Flash based device found (%s)!", NETANA_COOKIE);
+      }
+      else {
+          lRet = NETANA_FW_START_FAILED;
+          USER_Trace(ptDevInstance, NETANA_TRACELEVEL_ERROR, "Error: Invalid or missing flash based device (lRet=0x%08X)!", lRet);
+      }
+      lErrorIdentUpdate = NETANA_NO_ERROR;
+    }
 
-    } else
+    if (NETANA_NO_ERROR == lRet)
     {
       /* Read out DPM Layout.
          DPM always starts with a Base DPM followed by dynamically sized blocks in

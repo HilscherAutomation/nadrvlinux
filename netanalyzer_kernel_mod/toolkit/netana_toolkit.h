@@ -191,6 +191,7 @@ struct NETANA_DEVINSTANCE_T
   uint32_t                     ulDPMPhysicalAddress;
   uint32_t                     ulDPMSize;
   uint32_t                     ulInterruptNr;
+  uint32_t                     ulFlashBased;
   uint16_t                     usDeviceClass;
   uint32_t                     ulDevNo;
 

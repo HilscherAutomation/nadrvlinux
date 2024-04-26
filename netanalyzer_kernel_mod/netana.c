@@ -755,6 +755,7 @@ int netana_registerdevice(struct device *parent, struct netana_info *ptdeviceinf
         ptdeviceinfo->tkdevice->deviceinstance.pvDPM                = ptdeviceinfo->dpminfo->internal_addr;
         ptdeviceinfo->tkdevice->deviceinstance.ulDPMPhysicalAddress = ptdeviceinfo->dpminfo->addr;
         ptdeviceinfo->tkdevice->deviceinstance.ulDPMSize            = ptdeviceinfo->dpminfo->size;
+        ptdeviceinfo->tkdevice->deviceinstance.ulFlashBased         = ptdeviceinfo->flashbased;
         ptdeviceinfo->tkdevice->deviceinstance.usDeviceClass        = ptdeviceinfo->deviceclass;
         ptdeviceinfo->tkdevice->deviceinstance.ulInterruptNr        = ptdeviceinfo->irq;
         ptdeviceinfo->tkdevice->deviceinstance.pvOSDependent        = (void*)ptdeviceinfo;
