@@ -1,0 +1,11 @@
+prefix=/usr/local
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: libnetana
+Description: Hilscher netanalyzer user space library
+Requires: 
+Version: 1.0.0.0
+Libs: -L${libdir} -lnetana
+Cflags: -I${includedir}/netana

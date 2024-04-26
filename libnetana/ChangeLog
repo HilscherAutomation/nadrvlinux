@@ -1,0 +1,44 @@
+netAnalyzer-Library History:
+=============================
+
+V1.0.5.0 (18.12.18)
+-----------------
+Bugfix:
+  [NADRVLINUX-44] - unloading the kernel module may hang endless
+  [NADRVLINUX-43] - netana_get_packet() fails (with timeout) if packet is smaller than the provided buffer
+  [NADRVLINUX-42] - correct version number
+  [NADRVLINUX-41] - fixed handling of cifXANALYZER devices (enumeration and opening failed)
+Changes:
+  [NADRVLINUX-40] - added uevent notification ('change') to signal finish of sysfs file creation
+
+V1.0.4.0 (29.05.17)
+-----------------
+Bugfix:
+  [NADRVLINUX-36] - Kernel modules does not compile on newer kernels (4.1+)
+  [NADRVLINUX-37] - libnetana does not build out of source tree
+  [NADRVLINUX-38] - resyncing time is allowed during a capture running and makes timestamps unusable
+Added:
+  [NADRVLINUX-39] - Add support for capturing on cifX cards
+
+V1.0.3.0
+-----------------
+Added:
+ - added mailbox API functions (netana_put_packet(),netana_get_packet(),netana_get_mbx_state())
+
+V1.0.2.0
+-----------------
+Added:
+ - new capture mode NETANA_CAPTUREMODE_HIGHLOAD truncating all received frames to 58 bytes,
+   to be able to monitor high traffic load ethernet networks
+
+V1.0.1.0
+-----------------
+Bugfix:
+ - Driver may skip notification of remaining data when capture process becomes stopped by the user
+ - netana_set/get_filter() does not return error in case of to big filter value/mask
+ - netana_close_device() may lead into kernel panic (general protection fault)
+ - netana_close_device() does not return correct error (NETANA_INVALID_HANDLE) value if device was already closed
+
+V1.0.0.0
+-----------------
+ - Initial version

@@ -1,0 +1,30 @@
+TARGETNAME=netanaToolkit
+TARGETTYPE=LIBRARY
+
+MSC_WARNING_LEVEL=/W4
+
+KMDF_VERSION_MAJOR=1
+
+C_DEFINES = $(C_DEFINES) -DNETANA_TOOLKIT -DTOOLKIT_ENABLE_DSR_LOCK
+
+INCLUDES= ..\Source;.\Include;
+
+SOURCES= netana_toolkit.c   \
+         netana_functions.c \
+         netana_interrupt.c \
+         netana_capture.c
+
+PASS0_HEADERDIR=.
+         
+#
+# Generate WPP tracing code
+# $(SOURCES)   -- run software preprocessor on files listed in SOURCES
+# -km          -- use kernel mode
+# -func        -- define function we'll use for tracing
+#                 This would map all TraceEvents calls to 
+#                 DoTraceMessage.
+#
+RUN_WPP= $(SOURCES)                            \
+         -km                                   \
+     -func:TraceEvents(LEVEL,FLAGS,MSG,...) \
+         -gen:{km-WdfDefault.tpl}*.tmh

@@ -1,0 +1,54 @@
+netANALYZER-Driver History:
+=============================
+
+V1.0.5.0 (18.12.18)
+-----------------
+Bugfix:
+  [NADRVLINUX-44] - unloading the kernel module may hang endless
+  [NADRVLINUX-43] - netana_get_packet() fails (with timeout) if packet is smaller than the provided buffer
+  [NADRVLINUX-42] - correct version number
+  [NADRVLINUX-41] - fixed handling of cifXANALYZER devices (enumeration and opening failed)
+Changes:
+  [NADRVLINUX-40] - added uevent notification ('change') to signal finish of sysfs file creation
+
+V1.0.4.0 (29.05.17)
+-----------------
+Bugfix:
+  [NADRVLINUX-36] - Kernel modules does not compile on newer kernels (4.1+)
+  [NADRVLINUX-37] - libnetana does not build out of source tree
+  [NADRVLINUX-38] - resyncing time is allowed during a capture running and makes timestamps unusable
+Added:
+  [NADRVLINUX-39] - Add support for capturing on cifX cards
+
+V1.0.3.0 (20.09.16)
+-----------------
+Added:
+ - Added mailbox interface to firmware (sysfs -> device_control/mailbox)
+
+V1.0.2.0 (24.04.14)
+-----------------
+Bugfix:
+ - netana_stop_capture() may not return since device may not leave
+   "stop pending" state
+Changes:
+ - Toolkit updated to V1.5.5.0 (see Toolkit version history)
+ - Firmware updated to V1.5.4.0 (see Firmware version history)
+Added:
+ - new capture mode NETANA_CAPTUREMODE_HIGHLOAD truncating all received frames to 58 bytes,
+   to be able to monitor high traffic load ethernet networks
+
+V1.0.1.0 (19.02.14)
+-----------------
+Bugfix:
+ - netana_close_device() may lead to kernel panic (general protection fault in cleanlist function)
+ - driver may skip notification of remaining data when user calls netana_stop_capture()
+Changes:
+ - Update toolkit to V1.5.4.0
+ - Update bootloader to V1.4.15.0
+
+V1.0.0.0 (25.11.13)
+-----------------
+ - Initial version based on
+   netANALYZER-Toolkit : V1.5.3.0
+   Firmware            : V1.5.3.0
+   Bootloader          : V1.4.13.0

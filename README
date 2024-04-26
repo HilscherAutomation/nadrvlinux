@@ -1,0 +1,43 @@
+How to install the netAnalyzer driver:
+(For further information see the Linux netAnalyzer Driver documentation.)
+
+###############################################################################
+###  Quick Start ##############################################################
+###############################################################################
+
+  1. Open a console window and enter the directory containing this README file
+  2. run the installation script './build_install_driver' (root privileges
+     required).
+     The script will compile and install all required files (driver, library
+     and firmware). To run only single installation steps see the following
+     guidelines.
+
+  3. To build the example application see step 4).
+
+###############################################################################
+###  Driver installation step by step #########################################
+###############################################################################
+
+        - Plugin the hardware and start the system               (0)
+        - Build the netAnalyzer kernel module netana.ko          (1)
+        - Install the firmware and the kernel module (netana.ko) (2)
+        - Build the User Space library libnetana                 (3)
+        - Build and run demo application                         (4)
+
+        1)
+        1.1) Enter directory ./netana_kernel_mod and run "make"
+
+        2)
+        2.1) Enter ./tools/ and run ./install_netanako install (root required)
+        2.2) Run ./install_firmware install (root required)
+        2.3) Run ./install_netanako update (root required)
+        2.4) Run ./install_netanako load (root required)
+
+        3)
+        3.1) Enter ./libnetana/ and run "./configure"
+        3.2) Run "make"
+        3.3) Run "make install" (root required)
+
+        4)
+        4.1) Enter ../examples/ and run "make"
+        4.3) Start application ./netana_demo (root required)

@@ -1,0 +1,41 @@
+#!/bin/bash
+
+cur_path=$PWD
+kernelversion=""
+
+cd tools
+if ! ./install_netanako build ; then  # build module
+  echo "Error building kernel module!"
+elif ! sudo ./install_netanako install ; then          # install module
+  echo "Error installing kernel module!"
+elif ! sudo ./install_firmware install ; then        # install firmware
+  echo "Error installing firmware!"
+elif ! sudo ./install_netanako update ; then         # load driver
+  echo "Error updating module dependencies!"
+elif ! sudo ./install_netanako unload ; then
+  echo "Error unloading driver!"
+else
+  if ! sudo ./install_netanako load; then
+    echo "Error loading driver!"
+  fi
+fi
+cd ..
+
+# build and install user space library
+if [ $? == 0 ] ; then
+  cd libnetana
+  if ! ./configure ; then
+    echo "Error preparing environment!"
+  elif ! make ; then
+    echo "Error building user space library libnetana!"
+  else
+    if ! sudo make install; then
+      echo "Error installing userspace driver!"
+    else
+      echo "netanalyzer driver successfully installed!"
+    fi
+  fi
+fi
+cd ..
+
+exit

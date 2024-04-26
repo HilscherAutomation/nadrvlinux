@@ -1,0 +1,71 @@
+#!/bin/sh
+
+default_path="../netanalyzer_kernel_mod"
+default_kernel=""
+
+case "$1" in
+
+  "build")
+
+  if [ -n "$2" ]; then
+    default_kernel=$2
+    echo "Building netanalyzer kernel module for kernel '$default_kernel'"
+  else
+    echo "Building netanalyzer kernel module for kernel '$default_kernel'"
+    default_kernel=/lib/modules/$(uname -r)/build/
+  fi
+  cd $default_path
+  make clean KDIR=$default_kernel
+  make KDIR=$default_kernel
+  ;;
+
+  "install")
+
+  if [ -n "$2" ]; then
+    default_path=$2
+  fi
+
+  if
+  [ -e "$default_path/netanalyzer.ko" ]; then
+    echo "Copying kernel module netanalyzer.ko to installation path."
+    cp $default_path/netanalyzer.ko /lib/modules/$(uname -r)/kernel/drivers/char/
+  else
+    echo "Searching in $default_path! netanalyzer.ko not found!"
+    return 1;
+  fi
+  ;;
+
+  "update")
+  echo "Updating kernel module dependencies."
+  depmod
+  ;;
+
+  "load")
+  if
+  [ -e "/lib/modules/$(uname -r)/kernel/drivers/char/netanalyzer.ko" ]; then
+    echo "Loading kernel module netANALYZER"
+    modprobe netanalyzer
+   # module_state= cat /sys/module/netanalyzer/initstate
+    #if [ "live"=="$module_state" ]; then
+   #   return 1;
+   # fi
+  else
+    echo "Kernel module netanalyzer.ko currently not installed!"
+    return 0;
+  fi
+  ;;
+
+  "unload")
+  echo "Unload kernel module netANALYZER!"
+  modprobe -r netanalyzer
+  ;;
+
+  *) echo "Unknown parameter!"
+  echo "Options:"
+  echo "-> install: Copies the kernel module into the target directory."
+  echo "            Optional a source directory can be given."
+  echo "            e.g. install_netanalyzer_mod install ../netana_kernel_mod/"
+  echo "-> update : Updates the kernel module dependencies (depmod)."
+  echo "-> load   : Loads the kernel module."
+  echo "-> unload : Unloads the kernel module."
+esac

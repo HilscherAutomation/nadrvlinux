@@ -1,0 +1,63 @@
+netANALYZER-Toolkit Version History:
+====================================
+
+V1.7.0.0 (28.02.17)
+-----------------
+Added:
+ - Added new CIFX_DEVICE_CALL including handling
+
+V1.6.0.0 (10.10.16)
+-----------------
+Added:
+ - Added new V2 definitions to netana_user.h
+
+V1.5.6.0 (20.09.16)
+-----------------
+Added:
+ - Added mailbox interface to firmware (netana_put_packet()/netana_get_packet()/netana_get_mbx_state())
+
+V1.5.5.0 (22.04.14)
+-----------------
+Added:
+ - new capture mode NETANA_CAPTUREMODE_HIGHLOAD truncating all received frames to 58 bytes,
+   to be able to monitor high traffic load ethernet networks
+   (requires netANALYZER firmware 1.5.4.0 or later)
+
+V1.5.4.0 (19.02.14)
+-----------------
+Bugfix:
+ - netana_get_filter() does not validate maximum size of the retrieved filter
+Changed:
+ - Do not keep device configuration (filter, gpio settings) of a previous session when reopen a device
+
+V1.5.3.0 (25.11.13)
+-----------------
+Changed:
+ - WaitForBitState(): performance upgrade
+Bugfix:
+ - Exchanged direct access of handshake bits by locked variante (netana_tkit_ToggleBit()).
+   Otherwise handling may lead to an inconsistent state between host and netX.
+
+V1.5.2.0 (14.11.13)
+-----------------
+Changed:
+ - Synchronized access of shared buffer of ISR/DSR
+ - netana_get_portstat(): removed unnecessary timed port status update
+
+V1.5.1.0 (30.08.13)
+-----------------
+Added: 
+ - Support for netSCOPE devices
+ - API functions:
+     *  netana_set/get_gpio_voltage()
+     * add management commands (NETANA_MNGMT_CMD_DEV_FEATURE/ NETANA_MNGMT_CMD_SET/GET_DEV_CLASS_FILTER)
+
+Bugfix: restarting the device may lead to inaccessible PHYs
+
+V1.5.0.0
+-----------------
+ - changed default dma buffer timeout to 50ms (previous 500ms)
+
+V1.4.0.x
+-----------------
+ - Add version history

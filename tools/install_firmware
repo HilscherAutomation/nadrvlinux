@@ -1,0 +1,16 @@
+#!/bin/sh
+case "$1" in
+  "install")
+    echo "Creating directory /lib/firmware/netanalyzer/";
+    mkdir -p /lib/firmware/netanalyzer/
+    echo "Copying bootloader file NETX100-BSL.bin to ~netanalyzer/"
+    cp ../bsl/NETX100-BSL.bin /lib/firmware/netanalyzer/
+    echo "Copying firmware files (NANL-500.nxf and NSCP-100.nxf) to ~netanalyzer/"
+    cp ../firmware/*.nxf /lib/firmware/netanalyzer/
+  ;;
+
+  *) echo "Unknown parameter!"
+  echo "Options:"
+  echo "-> install: Creates directory /lib/firmware/netanalyzer/"
+  echo "            and copies bootloader and firmware."
+esac
