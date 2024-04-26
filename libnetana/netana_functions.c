@@ -1,4 +1,4 @@
-/**************************************************************************************
+/*************************************************************************************
 
         Copyright (c) Hilscher GmbH. All Rights Reserved.
 
@@ -69,6 +69,7 @@ static void    CloseCaptureFiles    ( struct NETANA_DEVINSTANCE_T* ptDevInst);
 static int32_t netana_get_state_poll( NETANA_HANDLE hDev, uint32_t* pulCaptureState, uint32_t* pulCaptureError);
 
 int g_fDriverVersionMismatch = 0;
+int g_fDriverRunning         = 0;
 int g_libInitError           = 0;
 
 extern NETANA_THREAD_PRIO_T g_tKThreadSetting;
@@ -76,37 +77,52 @@ extern NETANA_THREAD_PRIO_T g_tThreadSetting;
 
 //TODO: insert more user traces
 
+static void check_driver(void)
+{
+    NETANA_DRIVER_INFORMATION_T tDrvInfo;
+
+    int32_t lRet = netana_driver_information(sizeof(tDrvInfo), &tDrvInfo);
+
+    if(NETANA_DRIVER_NOT_RUNNING == lRet) {
+            g_fDriverRunning = 0;
+            g_fDriverVersionMismatch = 0;
+    } else if(NETANA_NO_ERROR == lRet) {
+            g_fDriverRunning = 1;
+            g_ulDMABufferSize  = tDrvInfo.ulDMABufferSize;
+            g_ulDMABufferCount = tDrvInfo.ulDMABufferCount;
+    } else {
+            g_fDriverRunning = 1;
+            fprintf(stderr, "Error while retrieving driver's DMA " \
+                    "configuration! Try using default. " \
+                    "(DMA-Cnt: %d / DMA-Size: %d)\n",
+                    g_ulDMABufferCount,
+                    g_ulDMABufferSize);
+    }
+
+    if(g_fDriverRunning) {
+            if ((tDrvInfo.ulVersionMajor<DRV_MAJOR) || (((tDrvInfo.ulVersionMajor==DRV_MAJOR)) && (tDrvInfo.ulVersionMinor<DRV_MINOR))) {
+                    fprintf(stderr, "This is not the correct driver version! -> netAnalyzer Kernel-Mode Driver: %d.%d.%d.%d\n",
+                            tDrvInfo.ulVersionMajor,
+                            tDrvInfo.ulVersionMinor,
+                            tDrvInfo.ulVersionBuild,
+                            tDrvInfo.ulVersionRevision);
+                    fprintf(stderr, "At least required: %d.%d.%d.%d\n", DRV_MAJOR, DRV_MINOR, DRV_BUILD, DRV_REV);
+                    g_fDriverVersionMismatch = 1;
+            }
+    }
+}
+
 /*****************************************************************************/
 /*! Initialization of gloabal driver information                             */
 /*****************************************************************************/
 void libinit(void)
 {
-        NETANA_DRIVER_INFORMATION_T tDrvInfo;
         pthread_mutexattr_t          mta;
         int                          iRet;
 
         g_lTimezoneCorrection = 0;
         g_ulTraceLevel        = 0x00;
 
-        if (NETANA_NO_ERROR == netana_driver_information(sizeof(tDrvInfo), &tDrvInfo)) {
-                g_ulDMABufferSize  = tDrvInfo.ulDMABufferSize;
-                g_ulDMABufferCount = tDrvInfo.ulDMABufferCount;
-        } else {
-                fprintf(stderr, "Error while retrieving driver's DMA " \
-                        "configuration! Try using default. " \
-                        "(DMA-Cnt: %d / DMA-Size: %d)\n",
-                        g_ulDMABufferCount,
-                        g_ulDMABufferSize);
-        }
-        if ((tDrvInfo.ulVersionMajor<DRV_MAJOR) || (((tDrvInfo.ulVersionMajor==DRV_MAJOR)) && (tDrvInfo.ulVersionMinor<DRV_MINOR))) {
-                fprintf(stderr, "This is not the correct driver version! -> netAnalyzer Kernel-Mode Driver: %d.%d.%d.%d\n",
-                        tDrvInfo.ulVersionMajor,
-                        tDrvInfo.ulVersionMinor,
-                        tDrvInfo.ulVersionBuild,
-                        tDrvInfo.ulVersionRevision);
-                fprintf(stderr, "At least required: %d.%d.%d.%d\n", DRV_MAJOR, DRV_MINOR, DRV_BUILD, DRV_REV);
-                g_fDriverVersionMismatch = 1;
-        }
         pthread_mutexattr_init(&mta);
         if( (iRet = pthread_mutexattr_settype(&mta, PTHREAD_MUTEX_RECURSIVE)) != 0 )
         {
@@ -654,7 +670,12 @@ int32_t netana_open_device(char* szDevice, NETANA_HANDLE* phDev)
         if( (NULL == szDevice) || (NULL == phDev) )
                 return NETANA_INVALID_PARAMETER;
 
-        if (g_fDriverVersionMismatch) {
+        check_driver();
+
+        if (!g_fDriverRunning) {
+                fprintf(stderr, "Driver not running!\n");
+                return NETANA_DRIVER_NOT_RUNNING;
+        } else if (g_fDriverVersionMismatch) {
                 fprintf(stderr, "Driver Version mismatch!\n");
                 return NETANA_FUNCTION_FAILED;
         } else if (g_libInitError) {
