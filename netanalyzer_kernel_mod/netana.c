@@ -839,8 +839,6 @@ void netana_unregisterdevice(struct netana_info *ptdeviceinfo)
         kobject_put(ptdeviceinfo->kobj_conf_dir);
         kobject_put(ptdeviceinfo->kobj_hw_dir);
         kobject_put(ptdeviceinfo->kobj_dev_info_dir);
-        kobject_put(ptdeviceinfo->kobj_dma_dir);
-        kobject_put(ptdeviceinfo->kobj_drv_info);
 
         /* delete device */
         device_destroy(netana_class->class, MKDEV(major, ptdeviceinfo->minor));
