@@ -1,0 +1,23 @@
+# library artefacts
+*.la
+*.lo
+*.so
+*.a
+
+libnetana/config.log
+libnetana/config.status
+libnetana/.deps/
+libnetana/.libs/
+libnetana/Makefile
+libnetana/libnetana.la
+libnetana/libtool
+libnetana/stamp-h1
+
+# Kernel artefacts
+netanalyzer_kernel_mod/**/*.cmd
+*.mod
+*.mod.c
+*.ko
+*.o
+Module.symvers
+modules.order
