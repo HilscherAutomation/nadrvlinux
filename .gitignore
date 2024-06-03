@@ -3,7 +3,6 @@
 *.lo
 *.so
 *.a
-
 libnetana/config.log
 libnetana/config.status
 libnetana/.deps/
@@ -21,3 +20,6 @@ netanalyzer_kernel_mod/**/*.cmd
 *.o
 Module.symvers
 modules.order
+
+# Example artefacts
+example/netanalyzer_demo
