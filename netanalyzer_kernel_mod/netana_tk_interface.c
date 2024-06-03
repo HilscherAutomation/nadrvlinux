@@ -1,3 +1,5 @@
+/* SPDX-License-Identifier: GPL-2.0-only */
+
 #include <linux/sched.h>
 
 #include "netana_tk_interface.h"

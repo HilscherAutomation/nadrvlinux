@@ -1,32 +1,4 @@
-/**************************************************************************************
-
-   Copyright (c) Hilscher GmbH. All Rights Reserved.
-
- **************************************************************************************
-
-   Filename:
-    $Id: netana_capture.c 6009 2013-11-22 09:41:43Z sebastiand $
-   Last Modification:
-    $Author: sebastiand $
-    $Date: 2013-11-22 10:41:43 +0100 (Fri, 22 Nov 2013) $
-    $Revision: 6009 $
-
-   Targets:
-     Win32/ANSI   : yes
-
-   Description:
-    Handles capturing process
-
-   Changes:
-
-     Version   Date        Author   Description
-     ----------------------------------------------------------------------------------
-     3        22.11.2013   SD       exchanged direct access of handshake bits by locked variante
-                                    (netana_tkit_ToggleBit())
-     2        05.02.2013   SD       add file header
-     1        -/-          MT       initial version
-
-**************************************************************************************/
+/* SPDX-License-Identifier: MIT */
 
 #include "netana_toolkit.h"
 

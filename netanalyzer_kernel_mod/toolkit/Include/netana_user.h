@@ -1,35 +1,4 @@
-/**************************************************************************************
-
-   Copyright (c) Hilscher GmbH. All Rights Reserved.
-
- **************************************************************************************
-
-   Filename:
-    $Workfile: netana_user.h $
-   Last Modification:
-    $Author: Sebastiand $
-    $Modtime: 20.01.09 13:32 $
-    $Revision: 792 $
-
-   Targets:
-     Win32/ANSI   : yes
-
-   Description:
-    Header for the netAnalyzer API definitions
-
-   Changes:
-
-     Version   Date        Author   Description
-     ----------------------------------------------------------------------------------
-     6        28.07.2017   RM       added new NETANA_DEV_CLASS_CIFX definition
-     5        26.07.2016   HP       added header V2 defintions
-     4        02.06.2015   SD       added mailbox API functions
-     3        17.04.2014   HP       added new capture mode NETANA_CAPTUREMODE_HIGHLOAD
-                                    (requires netANALYZER firmware version 1.5.5.0 or later)
-     2        05.02.2013   SD       add file header
-     1        -/-          MT       initial version
-
-**************************************************************************************/
+/* SPDX-License-Identifier: MIT */
 
 #ifndef __NETANA_USER__H
 #define __NETANA_USER__H

@@ -1,31 +1,4 @@
-/**************************************************************************************
-
-   Copyright (c) Hilscher GmbH. All Rights Reserved.
-
- **************************************************************************************
-
-   Filename:
-    $Id: OS_Dependent.h 6884 2015-06-02 07:46:45Z sebastiand $
-   Last Modification:
-    $Author: sebastiand $
-    $Date: 2015-06-02 09:46:45 +0200 (Tue, 02 Jun 2015) $
-    $Revision: 6884 $
-
-   Targets:
-     Win32/ANSI   : yes
-
-   Description:
-    Header file for the OS dependant definitions
-
-   Changes:
-
-     Version   Date        Author   Description
-     ----------------------------------------------------------------------------------
-     3        26.05.2015   SD       Added mutex-functions
-     2        05.02.2013   SD       add file header
-     1        -/-          MT       initial version
-
-**************************************************************************************/
+/* SPDX-License-Identifier: MIT */
 
 #ifndef __OS_DEPENDENT__H
 #define __OS_DEPENDENT__H

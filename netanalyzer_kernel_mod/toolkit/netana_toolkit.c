@@ -1,36 +1,4 @@
-/**************************************************************************************
-
-   Copyright (c) Hilscher GmbH. All Rights Reserved.
-
- **************************************************************************************
-
-   Filename:
-    $Id: netana_toolkit.c 7669 2017-02-28 16:30:46Z Robert $
-   Last Modification:
-    $Author: Robert $
-    $Date: 2017-02-28 17:30:46 +0100 (Tue, 28 Feb 2017) $
-    $Revision: 7669 $
-
-   Targets:
-     Win32/ANSI   : yes
-
-   Description:
-    Toolkit internal functions
-
-   Changes:
-
-     Version   Date        Author   Description
-     ----------------------------------------------------------------------------------
-     7        28.02.2017   RM       added handling for new CIFX_DEV_CLASS
-     6        02.06.2015   SD       add initialization of mailbox system
-     5        10.04.2014   SD       bugfix: netana_tkit_deviceadd() does not return an error
-                                    in case of device class request failure (RequestDeviceClass())
-     4        05.02.2014   SD       netana_tkit_deviceadd(): store filter, gpio default configuration
-     3        05.07.2013   SD       add device differentiation (RequestDeviceClass())
-     2        05.02.2013   SD       add file header
-     1        -/-          MT       initial version
-
-**************************************************************************************/
+/* SPDX-License-Identifier: MIT */
 
 #include "netana_toolkit.h"
 #include "netx_registers.h"

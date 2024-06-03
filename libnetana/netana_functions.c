@@ -1,34 +1,4 @@
-/*************************************************************************************
-
-        Copyright (c) Hilscher GmbH. All Rights Reserved.
-
-**************************************************************************************
-
-        Filename:
-                $Workfile: netana_functions.c $
-        Last Modification:
-                $Author: sebastiand $
-                $Modtime: 30.09.09 14:10 $
-                $Revision: 3529 $
-
-        Targets:
-                Linux        : yes
-
-        Description:
-
-
-        Changes:
-
-                Version   Date        Author   Description
-                ----------------------------------------------------------------------------------
-                4        02.06.2015   SD       - add mailbox API functions:netana_put_packet(),
-                                                 netana_get_packet(),netana_get_mbx_state()
-                3        18.02.2014   SD       - netana_close_device() did not delete internal device handle
-                2        05.02.2014   SD       - netana_set/get_filter(): validate size of binary file
-                                                 before retrieving kernel driver error
-                1        17.09.2012   SD       - Initial version
-
-**************************************************************************************/
+/* SPDX-License-Identifier: MIT */
 #include <unistd.h>
 #include <errno.h>
 #include <stdio.h>

@@ -1,40 +1,4 @@
-/**************************************************************************************
-
-   Copyright (c) Hilscher GmbH. All Rights Reserved.
-
- **************************************************************************************
-
-   Filename:
-    $Id: netana_functions.c 7669 2017-02-28 16:30:46Z Robert $
-   Last Modification:
-    $Author: Robert $
-    $Date: 2017-02-28 17:30:46 +0100 (Tue, 28 Feb 2017) $
-    $Revision: 7669 $
-
-   Targets:
-     Win32/ANSI   : yes
-
-   Description:
-    Function definition
-
-   Changes:
-
-     Version   Date        Author   Description
-     ----------------------------------------------------------------------------------
-     7        28.02.2017   RM       added handling for new CIFX_DEV_CLASS
-     6        26.05.2015   SD       add mailbox functions: netana_get_packet(),netana_get_mbx_state(),
-                                    netana_put_packet()
-     5        06.02.2014   SD       - netana_get_filter(): correct filter size to maximum if greater
-                                    - netana_open_device(): reset filter, gpio configuration
-     4        24.10.2013   SD       netana_get_portstat(): removed unnecessary timed port status update
-     3        05.07.2013   SD       add management commands NETANA_MNGMT_CMD_GET_DEV_FEATURE,
-                                    NETANA_MNGMT_CMD_SET_DEV_CLASS_FILTER
-                                    add netana_set_gpio_voltage(), netana_get_gpio_voltage()
-     2        05.02.2013   SD       add file header
-     1        -/-          MT       initial version
-
-**************************************************************************************/
-
+/* SPDX-License-Identifier: MIT */
 
 #include "netana_user.h"
 #include "netana_toolkit.h"

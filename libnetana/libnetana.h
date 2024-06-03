@@ -1,29 +1,4 @@
-/**************************************************************************************
-
-   Copyright (c) Hilscher GmbH. All Rights Reserved.
-
- **************************************************************************************
-
-   Filename:
-    $Workfile: libnetana.h $
-   Last Modification:
-    $Author: sebastiand $
-    $Modtime: 30.09.09 14:10 $
-    $Revision: 3529 $
-
-   Targets:
-     Linux        : yes
-
-   Description:
-
-
-   Changes:
-
-     Version   Date        Author   Description
-     ----------------------------------------------------------------------------------
-     1        17.09.2012   SD       - Initial version
-
-**************************************************************************************/
+/* SPDX-License-Identifier: MIT */
 #ifndef __LIBNETANA__H
 #define __LIBNETANA__H
 

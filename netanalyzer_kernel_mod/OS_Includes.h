@@ -1,3 +1,5 @@
+/* SPDX-License-Identifier: GPL-2.0-only */
+
 #ifndef __OS_INCLUDES__H
 #define __OS_INCLUDES__H
 
