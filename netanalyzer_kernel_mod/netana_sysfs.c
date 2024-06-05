@@ -2,6 +2,7 @@
 #include <linux/syscalls.h>
 #include <asm/current.h>
 #include <linux/device.h>
+#include <linux/version.h>
 
 #include "netana.h"
 #include "netana_toolkit.h"
@@ -316,7 +317,7 @@ static struct attribute *dma_attrs[] = {
         NULL,
 };
 /* driver info */
-static struct attribute *drvinfo_group[] = {
+static struct attribute *drvinfo_attrs[] = {
         &drvinfo_dma_bufsiz.attr,
         &drvinfo_dma_bufcnt.attr,
         &drvinfo_show_drvver.attr,
@@ -326,49 +327,49 @@ static struct attribute *drvinfo_group[] = {
         NULL,
 };
 /* device ident info */
-static struct attribute *device_ident_group[] = {
+static struct attribute *device_ident_attrs[] = {
         &dev_ident_info.attr,
         NULL,
 };
 /* device state */
-static struct attribute *drvstate_group[] = {
+static struct attribute *drvstate_attrs[] = {
         &netana_dev_state.attr,
         &netana_dev_state_poll.attr,
         NULL,
 };
 /* device feature */
-static struct attribute *devfeature_group[] = {
+static struct attribute *devfeature_attrs[] = {
         &netana_dev_feature.attr,
         NULL,
 };
 /* fw information */
-static struct attribute *fwerror_group[] = {
+static struct attribute *fwerror_attrs[] = {
         &netana_fw_error.attr,
         NULL,
 };
 /* filter settings */
-static struct attribute *filter_group[] = {
+static struct attribute *filter_attrs[] = {
         &netana_dev_filterRel.attr,
         NULL,
 };
 /* gpio settings */
-static struct attribute *gpio_group[] = {
+static struct attribute *gpio_attrs[] = {
         &gpio_status.attr,
         &gpio_level.attr,
         &gpio_voltage_get.attr,
         NULL,
 };
-static struct attribute *gpio_voltage_group[] = {
+static struct attribute *gpio_voltage_attrs[] = {
         &gpio_voltage_set.attr,
         NULL,
 };
 /* port state */
-static struct attribute *port_group[] = {
+static struct attribute *port_attrs[] = {
         &port_status.attr,
         NULL,
 };
 /* phy settings */
-static struct attribute *phy_group[] = {
+static struct attribute *phy_attrs[] = {
         &phy_regval0.attr,
         &phy_regval1.attr,
         &phy_regval2.attr,
@@ -404,30 +405,49 @@ static struct attribute *phy_group[] = {
         NULL,
 };
 /* device control settings */
-static struct attribute *capture_ctl_group[] = {
+static struct attribute *capture_ctl_attrs[] = {
         &netana_capture_control.attr,
         NULL,
 };
-static struct attribute *blink_group[] = {
+static struct attribute *blink_attrs[] = {
         &dev_cmd_blink.attr,
         NULL,
 };
-static struct attribute *pi_group[] = {
+static struct attribute *pi_attrs[] = {
         &dev_pi_config.attr,
         NULL,
 };
-static struct attribute *time_config_group[] = {
+static struct attribute *time_config_attrs[] = {
         &dev_time_config.attr,
         NULL,
 };
-static struct attribute *timeout_config_group[] = {
+static struct attribute *timeout_config_attrs[] = {
         &dev_timeout_config.attr,
         NULL,
 };
-static struct attribute *mailbox_group[] = {
+static struct attribute *mailbox_attrs[] = {
   &dev_mailbox_status.attr,
   NULL,
 };
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(5,18,0)
+ATTRIBUTE_GROUPS(dma);
+ATTRIBUTE_GROUPS(drvinfo);
+ATTRIBUTE_GROUPS(device_ident);
+ATTRIBUTE_GROUPS(drvstate);
+ATTRIBUTE_GROUPS(devfeature);
+ATTRIBUTE_GROUPS(fwerror);
+ATTRIBUTE_GROUPS(filter);
+ATTRIBUTE_GROUPS(gpio);
+ATTRIBUTE_GROUPS(gpio_voltage);
+ATTRIBUTE_GROUPS(port);
+ATTRIBUTE_GROUPS(phy);
+ATTRIBUTE_GROUPS(capture_ctl);
+ATTRIBUTE_GROUPS(blink);
+ATTRIBUTE_GROUPS(pi);
+ATTRIBUTE_GROUPS(time_config);
+ATTRIBUTE_GROUPS(timeout_config);
+ATTRIBUTE_GROUPS(mailbox);
+#endif
 
 /* --------------------------------------------- */
 /* ----------- Type Definitions  --------------- */
@@ -442,97 +462,165 @@ static struct attribute *mailbox_group[] = {
 struct kobj_type dma_map_attr_type = {
         .release       = release_netana_sysfs_dma,
         .sysfs_ops     = &dma_sysfs_ops,
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(5,18,0)
+        .default_groups = dma_groups,
+#else
         .default_attrs = dma_attrs,
+#endif
 };
 static struct kobj_type driverinfo_attr_type = {
         .release       = release_netana_sysfs,
         .sysfs_ops     = &generic_sysfs_ops,
-        .default_attrs = drvinfo_group,
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(5,18,0)
+        .default_groups = drvinfo_groups,
+#else
+        .default_attrs = drvinfo_attrs,
+#endif
 };
 static struct kobj_type dev_ident_info_attr_type = {
         .release       = release_netana_sysfs,
         .sysfs_ops     = &generic_sysfs_ops,
-        .default_attrs = device_ident_group,
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(5,18,0)
+        .default_groups = device_ident_groups,
+#else
+        .default_attrs = device_ident_attrs,
+#endif
 };
 static struct kobj_type devstate_attr_type = {
         .release       = release_netana_sysfs,
         .sysfs_ops     = &generic_sysfs_ops,
-        .default_attrs = drvstate_group,
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(5,18,0)
+        .default_groups = drvstate_groups,
+#else
+        .default_attrs = drvstate_attrs,
+#endif
 };
 static struct kobj_type devfeature_attr_type = {
         .release       = release_netana_sysfs,
         .sysfs_ops     = &generic_sysfs_ops,
-        .default_attrs = devfeature_group,
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(5,18,0)
+        .default_groups = devfeature_groups,
+#else
+        .default_attrs = devfeature_attrs,
+#endif
 };
 static struct kobj_type fwerror_attr_type = {
         .release       = release_netana_sysfs,
         .sysfs_ops     = &generic_sysfs_ops,
-        .default_attrs = fwerror_group,
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(5,18,0)
+        .default_groups = fwerror_groups,
+#else
+        .default_attrs = fwerror_attrs,
+#endif
 };
 static struct kobj_type filter_attr_type = {
         .release       = release_netana_sysfs,
         .sysfs_ops     = &generic_sysfs_ops,
-        .default_attrs = filter_group,
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(5,18,0)
+        .default_groups = filter_groups,
+#else
+        .default_attrs = filter_attrs,
+#endif
 };
 static struct kobj_type gpio_attr_type = {
         .release       = release_netana_sysfs,
         .sysfs_ops     = &generic_sysfs_ops,
-        .default_attrs = gpio_group,
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(5,18,0)
+        .default_groups = gpio_groups,
+#else
+        .default_attrs = gpio_attrs,
+#endif
 };
 static struct kobj_type gpio_volt_attr_type = {
         .release       = release_netana_sysfs,
         .sysfs_ops     = &generic_sysfs_ops,
-        .default_attrs = gpio_voltage_group,
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(5,18,0)
+        .default_groups = gpio_voltage_groups,
+#else
+        .default_attrs = gpio_voltage_attrs,
+#endif
 };
 static struct kobj_type port_attr_type = {
         .release       = release_netana_sysfs,
         .sysfs_ops     = &generic_sysfs_ops,
-        .default_attrs = port_group,
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(5,18,0)
+        .default_groups = port_groups,
+#else
+        .default_attrs = port_attrs,
+#endif
 };
 static struct kobj_type phy_attr_type = {
         .release       = release_netana_sysfs,
         .sysfs_ops     = &generic_sysfs_ops,
-        .default_attrs = phy_group,
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(5,18,0)
+        .default_groups = phy_groups,
+#else
+        .default_attrs = phy_attrs,
+#endif
 };
 static struct kobj_type capture_control_type =
 {
         .release       = release_netana_sysfs,
         .sysfs_ops     = &generic_sysfs_ops,
-        .default_attrs = capture_ctl_group,
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(5,18,0)
+        .default_groups = capture_ctl_groups,
+#else
+        .default_attrs = capture_ctl_attrs,
+#endif
 };
 static struct kobj_type exec_cmd_type =
 {
         .release       = release_netana_sysfs,
         .sysfs_ops     = &generic_sysfs_ops,
-        .default_attrs = blink_group,
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(5,18,0)
+        .default_groups = blink_groups,
+#else
+        .default_attrs = blink_attrs,
+#endif
 };
 
 static struct kobj_type pi_config_type =
 {
         .release       = release_netana_sysfs,
         .sysfs_ops     = &generic_sysfs_ops,
-        .default_attrs = pi_group,
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(5,18,0)
+        .default_groups = pi_groups,
+#else
+        .default_attrs = pi_attrs,
+#endif
 };
 
 static struct kobj_type time_config_type =
 {
         .release       = release_netana_sysfs,
         .sysfs_ops     = &generic_sysfs_ops,
-        .default_attrs = time_config_group,
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(5,18,0)
+        .default_groups = time_config_groups,
+#else
+        .default_attrs = time_config_attrs,
+#endif
 };
 
 static struct kobj_type timeout_config_type =
 {
         .release       = release_netana_sysfs,
         .sysfs_ops     = &generic_sysfs_ops,
-        .default_attrs = timeout_config_group,
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(5,18,0)
+        .default_groups = timeout_config_groups,
+#else
+        .default_attrs = timeout_config_attrs,
+#endif
 };
 
 static struct kobj_type mailbox_config_type =
 {
         .release       = release_netana_sysfs,
         .sysfs_ops     = &generic_sysfs_ops,
-        .default_attrs = mailbox_group,
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(5,18,0)
+        .default_groups = mailbox_groups,
+#else
+        .default_attrs = mailbox_attrs,
+#endif
 };
 
 /**
@@ -1028,7 +1116,7 @@ int nasysfs_create_phy_dir( struct netana_info *ptdeviceinfo)
                 ptdeviceinfo->sysphygroup.attgroup = kzalloc((ptdeviceinfo->tkdevice->deviceinstance.ulPortCnt) * sizeof(struct netana_sysfs_dir*), GFP_KERNEL);
 
                 /* set object index */
-                tmpphy_group = phy_attr_type.default_attrs;
+                tmpphy_group = phy_attrs;
                 while(tmpphy_group[lidx]) {
                         struct netana_sysfs_entry *phy_regval = container_of(tmpphy_group[lidx], struct netana_sysfs_entry, attr);
                         phy_regval->objnum = lidx;
