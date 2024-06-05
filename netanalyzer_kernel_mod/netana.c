@@ -320,7 +320,11 @@ static int init_netana_class(void)
                 goto err_kzalloc;
         }
         kref_init(&netana_class->kref);
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(6,4,0)
+        netana_class->class = class_create(DEVICE_NAME);
+#else
         netana_class->class = class_create(THIS_MODULE, DEVICE_NAME);
+#endif
         if ((ret = IS_ERR(netana_class->class))) {
                 printk(KERN_ERR "Could not create class for %s", DEVICE_NAME);
                 goto err_create_class;
