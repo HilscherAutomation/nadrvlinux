@@ -145,7 +145,9 @@ void  OS_Memfree(void* pvMem)
 /*****************************************************************************/
 void OS_Memset(void* pvMem, unsigned char bFill, uint32_t ulSize)
 {
-        memset(pvMem, bFill, ulSize);
+    uint8_t *dst = (uint8_t*)pvMem;
+    while(ulSize-- > 0)
+        *dst++ = bFill;
 }
 
 /*****************************************************************************/
