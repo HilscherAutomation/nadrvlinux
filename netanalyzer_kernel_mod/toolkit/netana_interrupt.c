@@ -1,32 +1,4 @@
-/**************************************************************************************
-
-   Copyright (c) Hilscher GmbH. All Rights Reserved.
-
- **************************************************************************************
-
-   Filename:
-    $Id: netana_interrupt.c 6020 2013-11-25 11:40:59Z sebastiand $
-   Last Modification:
-    $Author: sebastiand $
-    $Date: 2013-11-25 12:40:59 +0100 (Mon, 25 Nov 2013) $
-    $Revision: 6020 $
-
-   Targets:
-     Win32/ANSI   : yes
-
-   Description:
-    netAnalyzer specific interrupt handling
-
-   Changes:
-
-     Version   Date        Author   Description
-     ----------------------------------------------------------------------------------
-     4        22.11.2013   SD       removed unecessary irq handling for irq1
-     3        31.10.2013   SD       synchronized access to shared buffer of ISR/DSR
-     2        05.02.2013   SD       add file header
-     1        -/-          MT       initial version
-
-**************************************************************************************/
+/* SPDX-License-Identifier: MIT */
 
 #include "netana_toolkit.h"
 

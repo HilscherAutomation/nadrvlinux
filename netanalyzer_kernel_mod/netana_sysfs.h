@@ -1,3 +1,5 @@
+/* SPDX-License-Identifier: GPL-2.0-only */
+
 #ifndef __NETANA_SYSFS_H__
 #define __NETANA_SYSFS_H__
 

@@ -1,3 +1,5 @@
+/* SPDX-License-Identifier: GPL-2.0-only */
+
 #include <linux/module.h>
 #include <linux/moduleparam.h>
 #include <linux/idr.h>
@@ -139,20 +141,35 @@ void netana_notify_state(uint32_t ulcapturestate, uint32_t ulcaputererror,
 */
 int netana_update_dsr_thread_prio( struct netana_info* ptdeviceinfo, int iPolicy, int iPrio)
 {
-        struct sched_param  tSchedParam = {0};
-        int                 iret        = 0;
+        int iret = 0;
+#if LINUX_VERSION_CODE < KERNEL_VERSION(5,9,0)
+         struct sched_param  tSchedParam = {0};
 
-        tSchedParam.sched_priority = iPrio;
+         tSchedParam.sched_priority = iPrio;
 
-        if ((NULL != ptdeviceinfo) && (NULL != ptdeviceinfo->dsrthread)) {
+         if ((NULL != ptdeviceinfo) && (NULL != ptdeviceinfo->dsrthread)) {
                 if ((iret = sched_setscheduler( ptdeviceinfo->dsrthread, iPolicy, &tSchedParam))) {
                         printk( KERN_INFO "DSR priority settings invalid!\n");
                         printk( KERN_INFO "Changing DSR thread priority returned %d\n", iret);
                 }
+         } else {
+                 printk( KERN_INFO "Error no DSR thread running!\n");
+                 iret = -EINVAL;
+         }
+#else
+        if ((NULL != ptdeviceinfo) && (NULL != ptdeviceinfo->dsrthread)) {
+                if(iPolicy == SCHED_FIFO) {
+                        if(iPrio >= 50 )
+                                sched_set_fifo(ptdeviceinfo->dsrthread);
+                        else
+                                sched_set_fifo_low(ptdeviceinfo->dsrthread);
+                } else
+                        sched_set_normal(ptdeviceinfo->dsrthread, iPrio);
         } else {
                 printk( KERN_INFO "Error no DSR thread running!\n");
                 iret = -EINVAL;
         }
+#endif
         return iret;
 }
 
@@ -305,7 +322,11 @@ static int init_netana_class(void)
                 goto err_kzalloc;
         }
         kref_init(&netana_class->kref);
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(6,4,0)
+        netana_class->class = class_create(DEVICE_NAME);
+#else
         netana_class->class = class_create(THIS_MODULE, DEVICE_NAME);
+#endif
         if ((ret = IS_ERR(netana_class->class))) {
                 printk(KERN_ERR "Could not create class for %s", DEVICE_NAME);
                 goto err_create_class;

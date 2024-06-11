@@ -1,44 +1,4 @@
-/**************************************************************************************
-
-Copyright (c) Hilscher GmbH. All Rights Reserved.
-
-**************************************************************************************
-
-        Filename:
-        $Workfile: USER_Linux.c $
-        Last Modification:
-        $Author: sebastiand $
-        $Modtime: 4.03.09 12:59 $
-        $Revision: 1517 $
-
-        Targets:
-        Linux        : yes
-
-        Description:
-        Linux user specific implementation for finding firmware files, etc.
-
-        Changes:
-
-        Version   Date        Author       Description
-        ----------------------------------------------------------------------------------
-        5        28.05.2010   SD           Change:
-                                                - GetDeviceDir/GetChannelDir returns path depending on slot-no
-                                                (if rotary switch != 0)
-                                                - correct timestamp print
-        4        16.02.2009   MT           Added:
-                                                - "irqprio" key for device.conf to setup pthread priority
-                                                - define CIFX_TOOLKIT_USESSINGLE_DIRECTORY, to let the
-                                                toolkit only look into "/opt/cifx/FW" for a firmware.
-                                                This can be used on single cifX OEM devices to prevent
-                                                the need for a unique cifX device directory (NOTE: This
-                                                only supportd 1 cifX device)
-        3        27.01.2009   MT           Implemented USER_GetOSFile and adjusted
-                                                USER_GetBootloader to support netX50)
-        2        28.11.2008   MT           Implemented firmware/config file handling
-                                                Implemented Alias/IRQ enable support
-        1        12.11.2008   Linutronix   Initial version
-
-**************************************************************************************/
+/* SPDX-License-Identifier: GPL-2.0-only */
 
 #include <linux/module.h>
 #include <linux/types.h>

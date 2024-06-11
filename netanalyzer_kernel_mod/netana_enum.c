@@ -1,3 +1,5 @@
+/* SPDX-License-Identifier: GPL-2.0-only */
+
 #include <linux/module.h>
 #include <linux/kernel.h>
 #include <linux/init.h>
@@ -61,8 +63,8 @@ static int netana_pci_probe( struct pci_dev* ptpci_device, const struct pci_devi
 
         if ((ptdevicemem->addr    = pci_resource_start( ptpci_device, 0)) ) {
                 ptdevicemem->size = pci_resource_len( ptpci_device, ibar);
-                ptdevicemem->internal_addr = ioremap_nocache( ptdevicemem->addr,
-                                                        ptdevicemem->size);
+                ptdevicemem->internal_addr = ioremap( ptdevicemem->addr,
+                                                      ptdevicemem->size);
         }
         if (ptdevicemem->internal_addr == NULL)
                 goto err_pci_resource;
@@ -269,7 +271,7 @@ static int nanl_of_probe(struct platform_device *pdev)
         /* Preliminary work to add netanalyzer devices */
         ptdevicemem->addr = res->start;
         ptdevicemem->size = res->end - res->start + 1;
-        ptdevicemem->internal_addr = devm_ioremap_nocache(&pdev->dev, ptdevicemem->addr, ptdevicemem->size);
+        ptdevicemem->internal_addr = devm_ioremap(&pdev->dev, ptdevicemem->addr, ptdevicemem->size);
 
         printk(KERN_INFO "card physical DPM: 0x%lX!\n", ptdevicemem->addr);
         printk(KERN_INFO "DPM mapped to    : 0x%lX!\n", (long unsigned int)ptdevicemem->internal_addr);
@@ -357,5 +359,3 @@ MODULE_LICENSE("GPL");
 
 MODULE_AUTHOR(DRIVER_AUTHOR);
 MODULE_DESCRIPTION(DRIVER_DESC);
-
-MODULE_SUPPORTED_DEVICE( DEVICE_NAME);

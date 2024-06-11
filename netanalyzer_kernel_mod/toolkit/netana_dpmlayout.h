@@ -1,31 +1,4 @@
-/**************************************************************************************
-
-   Copyright (c) Hilscher GmbH. All Rights Reserved.
-
- **************************************************************************************
-
-   Filename:
-    $Id: netana_dpmlayout.h 6884 2015-06-02 07:46:45Z sebastiand $
-   Last Modification:
-    $Author: sebastiand $
-    $Date: 2015-06-02 09:46:45 +0200 (Tue, 02 Jun 2015) $
-    $Revision: 6884 $
-
-   Targets:
-     Win32/ANSI   : yes
-
-   Description:
-    Definition of the netAnalyzer DMP
-
-   Changes:
-
-     Version   Date        Author   Description
-     ----------------------------------------------------------------------------------
-     3        02.06.2015   SD       added mailbox information (hsk bits, dpm layout)
-     2        05.02.2013   SD       add file header
-     1        -/-          MT       initial version
-
-**************************************************************************************/
+/* SPDX-License-Identifier: MIT */
 
 #ifndef __NETANA_DPMLAYOUT__H
 #define __NETANA_DPMLAYOUT__H

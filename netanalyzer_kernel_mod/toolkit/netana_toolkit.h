@@ -1,32 +1,4 @@
-/**************************************************************************************
-
-   Copyright (c) Hilscher GmbH. All Rights Reserved.
-
- **************************************************************************************
-
-   Filename:
-    $Id: netana_toolkit.h 7669 2017-02-28 16:30:46Z Robert $
-   Last Modification:
-    $Author: Robert $
-    $Date: 2017-02-28 17:30:46 +0100 (Tue, 28 Feb 2017) $
-    $Revision: 7669 $
-
-   Targets:
-     Win32/ANSI   : yes
-
-   Description:
-
-
-   Changes:
-
-     Version   Date        Author   Description
-     ----------------------------------------------------------------------------------
-     4        28.02.2017   RM       Added new CIFX_DEV_CLASS definition
-     3        02.06.2015   SD       added mailbox resources
-     2        05.02.2013   SD       add file header
-     1        -/-          MT       initial version
-
-**************************************************************************************/
+/* SPDX-License-Identifier: MIT */
 
 #ifndef __NETANA_TOOLKIT__H
 #define __NETANA_TOOLKIT__H

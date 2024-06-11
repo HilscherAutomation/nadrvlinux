@@ -1,33 +1,4 @@
-/**************************************************************************************
-
-Copyright (c) Hilscher GmbH. All Rights Reserved.
-
-**************************************************************************************
-
-        Filename:
-        $Workfile: OS_Linux.c $
-        Last Modification:
-        $Author: sebastiand $
-        $Modtime: 30.09.09 14:58 $
-        $Revision: 3111 $
-
-        Targets:
-        Linux        : yes
-
-        Description:
-        Linux O/S abstraction for toolkit
-
-        Changes:
-
-        Version   Date        Author       Description
-        ----------------------------------------------------------------------------------
-        3        02.06.15     SD       - Added mutex functions (lock with timeout)
-        2        24.04.14     SD       - Bugfix: OS_WaitEvent() may not block, since
-                                         timeout results to 0 if timeout < 1000ms
-                                         (now use kernel macro instead)
-        1        -/-          SD       - initial version
-
-**************************************************************************************/
+/* SPDX-License-Identifier: GPL-2.0-only */
 
 /*****************************************************************************/
 /*! \file OS_Linux.c
@@ -145,7 +116,9 @@ void  OS_Memfree(void* pvMem)
 /*****************************************************************************/
 void OS_Memset(void* pvMem, unsigned char bFill, uint32_t ulSize)
 {
-        memset(pvMem, bFill, ulSize);
+    uint8_t *dst = (uint8_t*)pvMem;
+    while(ulSize-- > 0)
+        *dst++ = bFill;
 }
 
 /*****************************************************************************/

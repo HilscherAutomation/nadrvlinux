@@ -1,30 +1,4 @@
-/**************************************************************************************
-
-   Copyright (c) Hilscher GmbH. All Rights Reserved.
-
- **************************************************************************************
-
-   Filename:
-    $Workfile: netana_errors.h $
-   Last Modification:
-    $Author: Sebastiand $
-    $Modtime: 20.01.09 13:32 $
-    $Revision: 792 $
-
-   Targets:
-     Win32/ANSI   : yes
-
-   Description:
-    netAnalyzer Driver specific error codes
-
-   Changes:
-
-     Version   Date        Author   Description
-     ----------------------------------------------------------------------------------
-     2        05.02.2013   SD       add file header
-     1        -/-          MT       initial version
-
-**************************************************************************************/
+/* SPDX-License-Identifier: MIT */
 
 #pragma once
 #ifndef __NETANA_ERRORS__H
