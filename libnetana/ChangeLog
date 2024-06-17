@@ -1,6 +1,11 @@
 netAnalyzer-Library History:
 =============================
 
+V1.0.6.0 (17.06.24)
+-----------------
+Change:
+  [NADRVLINUX-57] - Allow opening the driver via API if kernel module is loaded after application start
+
 V1.0.5.0 (18.12.18)
 -----------------
 Bugfix:
